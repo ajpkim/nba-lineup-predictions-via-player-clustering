@@ -180,7 +180,7 @@ def scrape_combine_season_data(season: int, stat_types: list):
 def process_write_season_data(df, season, stat_cols, filepath):
     """Extract the relevant columns, write out as csv, return DF"""    
     df = df.loc[:, stat_cols].copy()
-    df.set_index(df.index.astype(str) + ' ' + str(season)[-2:], inplace=True)
+    df.set_index(df.index.astype(str) + ' ' + str(season)[-4:], inplace=True)
     
     with open(filepath, 'w') as f:
         df.to_csv(filepath)
