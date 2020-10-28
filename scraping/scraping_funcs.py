@@ -66,7 +66,7 @@ def select_season(browser, season):
 
 ############### FUNCTIONS FOR HANDLING RAW TABLE AND SCRAPED DFS ###############
 
-def scrape_table(browser, stat_type: str):
+def scrape_table(browser, stat_type: str, add_prefix=False):
     """
     Scrapes stats table present on browser and returns pandas DF. 
     stat_type is one of following str: 'traditional', 'advanced', 'misc', 'scoring', 'usage', 'opponent', 'defense'
@@ -82,7 +82,7 @@ def scrape_table(browser, stat_type: str):
     ## columns for each stat table type...
     if n == 1:  # traditional
         cols = ['TEAM', 'AGE', 'GP', 'W', 'L', 'MIN', 'PTS', 'FGM', 'FGA', 'FG%', '3PM', '3PA', '3P%', 'FTM', 'FTA', 'FT%', 'OREB', 'DREB', 'REB', 'AST', 'TOV', 'STL', 'BLK', 'PF', 'FP', 'DD2', 'TD3', '+/-']
-    
+
     elif n == 2:  # advanced
         cols = ['TEAM', 'AGE', 'GP', 'W', 'L', 'MIN', 'OFFRTG', 'DEFRTG', 'NETRTG', 'AST%', 'AST/TO', 'AST RATIO', 'OREB%', 'DREB%', 'REB%', 'TO RATIO', 'EFG%', 'TS%', 'USG%', 'PACE', 'PIE']
     
@@ -101,6 +101,9 @@ def scrape_table(browser, stat_type: str):
     
     elif n == 7:  # defense
         cols = ['TEAM','AGE','GP','W','L','MIN','DEF RTG','DREB','DREB%','%DREB','STL','STL%','BLK','%BLK','OPP PTS OFF TOV','OPP PTS 2ND CHANCE','OPP PTS FB','OPP PTS PAINT','DEF WS']
+
+    if add_prefix: 
+            cols = [stat_type[0:2] + col for col in cols]
 
     ## extract position of first player row
     for i, line in enumerate(table):
@@ -176,12 +179,22 @@ def scrape_combine_season_data(season: int, stat_types: list):
 
 
 ############### FUNCTIONS FOR HANDLING SCRAPED DATA ###############
+### AK: removed need for predefined stat cols, just want to scrape and will handle afterwards, also adding type_prefix option (10/27/20) 
 
-def process_write_season_data(df, season, stat_cols, filepath):
-    """Extract the relevant columns, write out as csv, return DF"""    
-    df = df.loc[:, stat_cols].copy()
-    df.set_index(df.index.astype(str) + ' ' + str(season)[-4:], inplace=True)
+# def process_write_season_data(df, season, stat_cols, filepath):
+#     """Extract the relevant columns, write out as csv, return DF"""    
+#     df = df.loc[:, stat_cols].copy()
+#     df.set_index(df.index.astype(str) + ' ' + str(season)[-4:], inplace=True)
     
+#     with open(filepath, 'w') as f:
+#         df.to_csv(filepath)
+    
+#     return df
+
+def process_write_season_data(df, season, filepath):
+    """Extract the relevant columns, write out as csv, return DF"""    
+    # df = df.loc[:, stat_cols].copy()
+    df.set_index(df.index.astype(str) + ' ' + str(season)[-4:], inplace=True)
     with open(filepath, 'w') as f:
         df.to_csv(filepath)
     
@@ -189,20 +202,30 @@ def process_write_season_data(df, season, stat_cols, filepath):
 
 ############### WRAPPERS FOR EVERYTHING ###############
 
-def scrape(seasons, stat_types, stat_cols, stat_dir, verbose=True):
+# def scrape(seasons, stat_types, stat_cols, stat_dir, verbose=True):
+#     """Scrape stats for given seasons, write out season data, and return combined DF"""
+#     dfs = []
+#     for season in seasons:
+#         if verbose: print('scraping:', season, '   |   ', datetime.now())
+#         filepath = stat_dir + 'stats_' + str(season) + '.csv'
+#         df = scrape_combine_season_data(season, stat_types)
+#         df = process_write_season_data(df, season, stat_cols, filepath)
+#         dfs.append(df)
+
+#     df_combined = pd.concat(dfs)
+    
+#     return df_combined
+
+def scrape(seasons, stat_types, stat_dir, verbose=True):
     """Scrape stats for given seasons, write out season data, and return combined DF"""
     dfs = []
     for season in seasons:
         if verbose: print('scraping:', season, '   |   ', datetime.now())
         filepath = stat_dir + 'stats_' + str(season) + '.csv'
         df = scrape_combine_season_data(season, stat_types)
-        df = process_write_season_data(df, season, stat_cols, filepath)
+        df = process_write_season_data(df, season, filepath)
         dfs.append(df)
 
     df_combined = pd.concat(dfs)
     
     return df_combined
-
-
-def combine_data(data_dir):
-    pass

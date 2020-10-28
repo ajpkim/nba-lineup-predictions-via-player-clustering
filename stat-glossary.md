@@ -18,7 +18,6 @@ REMOVING:
 ## Stats
 - %3PA: Percent of Team's 3PT Field Goals Attemped
 
-
 - %3PM: Percent of Team's 3PT Field Goals Made
 - %AST: Percent of Team's Assists
 - %BLK: Percent of Team's Blocks
