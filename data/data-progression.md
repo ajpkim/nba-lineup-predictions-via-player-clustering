@@ -5,4 +5,6 @@ data 2: changed starting stats. added value and holsitics measures: +/-, offrtg,
   - re-dropped +/-
 data 3: re-dropped OFFRTG, DEFRTG
 
-data 4 stats:
+data 4 stats: big overhaul. Dropped all the team % stats. Down to 31 columns including added in MPG.
+
+data 5: same as data4 with PIE added back in to help separate stars
