@@ -2,4 +2,5 @@ nba-vs-code-workspace.code-workspace
 .ipynb_checkpoints
 __pycache__
 geckodriver.log
-
+nbacom_DNU
+bballref_data_copy
