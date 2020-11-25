@@ -1,4 +1,4 @@
-from bballref_lineup_scraping_funcs import *
+from bballref_lineup_scraping_funcs import scrape_lineup_data
 
 data_dir = 'bballref_data/lineups/'
 n_man_lineup = 5
