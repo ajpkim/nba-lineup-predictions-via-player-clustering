@@ -1,6 +1,6 @@
-nba-vs-code-workspace.code-workspace
+venv/
+*worksheet*
 .ipynb_checkpoints
 __pycache__
 geckodriver.log
-nbacom_DNU
-bballref_data_copy
+naming_clusters.md
