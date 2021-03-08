@@ -1,6 +1,3 @@
-3/3/21 notes
-- "slim pca" is the one I used so going to remove all the other datasets
-
 # Datasets
 ** Some datasets were renamed and notebooks may contain references to old dataset names **
 
