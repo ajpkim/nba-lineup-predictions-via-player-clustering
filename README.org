@@ -1,0 +1,14 @@
+* NBA Lineup Predictions with Player Clustering
+
+The conclusion of this project is a simple neural network trained to predict NBA lineup point differentials per 100 possessions based on backward looking player clusters generated from a gaussian mixture model (fit on scraped player stats) and combined with the previous years [[https://www.basketball-reference.com/about/bpm2.html][box plus/minus]]. The best network achieved a mean test error of 5.6 points per 100 possessions. See [[https://ajpkim.com/projects/nba-lineup-predictions-with-clustering/][my site]] for a detailed project writeup.
+
+This repo has jupyter notebooks and a few scripts for the following:
+- Scraping player statistics and 4-player/5-player lineup data from [[bask][basketballreference.com]]
+  - Selenium, Beautiful Soup
+- Cleaning, transforming, and combining datasets
+- Data exploration and analysis
+- PCA
+- Clustering with a gaussian mixture model
+- Cluster analysis
+- Predicting lineup differentials with a neural network
+  - PyTorch
